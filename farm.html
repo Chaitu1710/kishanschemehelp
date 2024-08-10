@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farmer Scheme Eligibility Checker</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Link to external CSS file -->
+</head>
+<body>
+
+<header>
+    <h1>Farmer Scheme Eligibility Checker</h1>
+</header>
+
+<div class="container">
+    <form id="farmerForm">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="age">Age:</label>
+        <input type="number" id="age" name="age" required>
+
+        <label for="revenue">Revenue:</label>
+        <input type="number" id="revenue" name="revenue" required>
+
+        <label for="profit">Profit:</label>
+        <input type="number" id="profit" name="profit" required>
+
+        <label for="loss">Loss:</label>
+        <input type="number" id="loss" name="loss" required>
+
+        <label for="land_owned">Do you own land?</label>
+        <select id="land_owned" name="land_owned" required>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+        </select>
+
+        <label for="land_area">If yes, how much land (in acres)?</label>
+        <input type="number" id="land_area" name="land_area">
+
+        <label for="crops">Preferred Crops:</label>
+        <input type="text" id="crops" name="crops" required>
+
+        <label for="season">Farming Season:</label>
+        <input type="text" id="season" name="season" required>
+
+        <label for="farming_type">Type of Farming:</label>
+        <input type="text" id="farming_type" name="farming_type" required>
+
+        <label for="soil_type">Soil Type:</label>
+        <input type="text" id="soil_type" name="soil_type" required>
+
+        <label for="income">Income:</label>
+        <input type="number" id="income" name="income" required>
+
+        <label for="caste">Caste/Category:</label>
+        <input type="text" id="caste" name="caste" required>
+
+        <label for="state">State:</label>
+        <input type="text" id="state" name="state" required>
+
+        <label for="exploitation">Have you faced exploitation?</label>
+        <select id="exploitation" name="exploitation" required>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+        </select>
+
+        <input type="submit" value="Check Eligibility">
+    </form>
+
+    <div id="result"></div>
+</div>
+
+<script>
+    document.getElementById('farmerForm').addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        // Gather form data
+        const name = document.getElementById('name').value;
+        const age = parseInt(document.getElementById('age').value);
+        const revenue = parseFloat(document.getElementById('revenue').value);
+        const profit = parseFloat(document.getElementById('profit').value);
+        const loss = parseFloat(document.getElementById('loss').value);
+        const landOwned = document.getElementById('land_owned').value;
+        const landArea = parseFloat(document.getElementById('land_area').value) || 0;
+        const crops = document.getElementById('crops').value;
+        const season = document.getElementById('season').value;
+        const farmingType = document.getElementById('farming_type').value;
+        const soilType = document.getElementById('soil_type').value;
+        const income = parseFloat(document.getElementById('income').value);
+        const caste = document.getElementById('caste').value;
+        const state = document.getElementById('state').value;
+        const exploitation = document.getElementById('exploitation').value;
+
+        // Eligibility logic
+        let eligibleSchemes = [];
+
+        if (landOwned === "Yes" && landArea > 2.0) {
+            eligibleSchemes.push("Pradhan Mantri Kisan Samman Nidhi (PM-KISAN)");
+        }
+        if (caste === "SC" || caste === "ST") {
+            eligibleSchemes.push("Pradhan Mantri Krishi Sinchai Yojana (PMKSY)");
+        }
+        if (income < 50000) {
+            eligibleSchemes.push("Kisan Credit Card (KCC)");
+        }
+        if (soilType === "Alluvial" && season === "Kharif") {
+            eligibleSchemes.push("Pradhan Mantri Fasal Bima Yojana (PMFBY)");
+        }
+
+        // Add more schemes and conditions here...
+
+        // Display results
+        let resultDiv = document.getElementById('result');
+        resultDiv.innerHTML = `<h2>Eligible Schemes for ${name}:</h2>`;
+        
+        if (eligibleSchemes.length > 0) {
+            resultDiv.innerHTML += '<ul>';
+            eligibleSchemes.forEach(scheme => {
+                resultDiv.innerHTML += `<li>${scheme}</li>`;
+            });
+            resultDiv.innerHTML += '</ul>';
+        } else {
+            resultDiv.innerHTML += `<p>No eligible schemes found.</p>`;
+        }
+
+        // Display some technological knowledge
+        resultDiv.innerHTML += `<h2>Technological Knowledge Resources:</h2>
+                                <ul>
+                                    <li>Modern Irrigation Techniques</li>
+                                    <li>Organic Farming Best Practices</li>
+                                    <li>Soil Health Management</li>
+                                </ul>`;
+    });
+</script>
+
+</body>
+</html>
